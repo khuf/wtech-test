@@ -1,11 +1,11 @@
 import React from "react";
-import { Department } from "../DepartmentSelector/DepartmentSelector";
 import DepartmentSelector from "../DepartmentSelector/DepartmentSelector.tsx";
+import { Department } from "../DepartmentSelector/TreeStructure.ts";
 
 
 const DepartmentMapper = {
     toDepartment: (department: DepartmentEntity): Department => (
-        { id: String(department.OID), title: department.Title, color: department.Color, parentId: department.DepartmentParent_OID ? String(department.DepartmentParent_OID): null}
+        { id: String(department.OID), title: department.Title, color: department.Color, parentId: department.DepartmentParent_OID ? String(department.DepartmentParent_OID) : null }
     )
 };
 
@@ -13,9 +13,11 @@ function DepartmentPage() {
 
     const departments = data.map(d => DepartmentMapper.toDepartment(d));
     return (
-        <div className="w-fit">
-            <DepartmentSelector departments={departments} />
-            <h1>Departments</h1>
+        <div>
+            <h1 className="text-3xl">Departments</h1>
+            <div className="w-fit">
+                <DepartmentSelector departments={departments} />
+            </div>
         </div>
     )
 }
