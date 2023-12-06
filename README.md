@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+## Specs
+
+* At the root level, allow for any number of branches
+* A root node is distinct from other nodes in that it does not have a parent node
+* A branch can have any number of leaf and/or branch nodes
+* A leaf node does not have any children (How do we identify leaf nodes?)
+* Selected departments is a list of object ids (flat structure)
+* The ratio between selected department to the number of total descendants (branches or leafs) of a specified node should be visible for each department
