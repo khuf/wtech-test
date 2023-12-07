@@ -29,4 +29,5 @@ You may also see any lint errors in the console.
 * At the moment, we rebuild and rerender the whole tree whenever a node is selected/deselected. Ideally, we only re-render the changed node and all it's parents (trunk).
 * A root node with no children is "treated" as a leaf node in terms of how it's view, i.e. we don't show how a badge to indicate how many nodes are selected. For such nodes, we could display (1/1) in front of the checkbox. In my opinion, it's better to just show nothing and rather have a badge at the top level that shows the combined number of selected nodes for all tree "trunks". 
 * We may come up with a better solution with a state managmeent mechansm such as the built-in Context API.
-* Regarding the tree structure, I could have stored references to the nodes parents such that we could traverse through the tree and update nodes as needed, but I'm not sure if that would benefit much in this particular use case.
+* Regarding the tree structure, I could have stored references to the parents such that we could traverse through the tree and update nodes as needed, but I'm not sure if that would benefit much in this particular use case.
+* Both string and numerical ids should be supported. 
