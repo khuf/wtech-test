@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Department, TreeNode } from "./TreeStructure";
+import ChevronUp from "../icons/ChevronUp.tsx";
+import ChevronDown from "../icons/ChevronDown.tsx";
 
 interface TreeNodeProps {
     node: TreeNode<Department>;
@@ -23,12 +25,8 @@ const BranchNode = ({ node, toggleNode }: TreeNodeProps) => {
         <li className="py-1.5">
             <div className="flex space-x-2 px-3">
                 <button onClick={() => setCollapsed(!collapsed)}>
-                    {collapsed ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                    </svg>
-                        : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                        </svg>}
+                    {collapsed ? <ChevronUp />
+                        : <ChevronDown/>}
                 </button>
                 <span className="border-red-800 border-l-4 pl-1.5">{`${node.data.title} (${selectedLeafNodeCount}/${leafNodeCount})`}</span>
             </div>
@@ -49,7 +47,7 @@ const LeafNode = ({ node, toggleNode }: TreeNodeProps) => {
     return (
         <li className="py-1.5">
             <div className="flex space-x-2 px-3">
-                <span style={{borderColor: departmentColor}} className="border-l-4 pl-1.5 pr-4">{`${node.data.title}`}</span>
+                <span style={{ borderColor: departmentColor }} className="border-l-4 pl-1.5 pr-4">{`${node.data.title}`}</span>
                 <input type="checkbox" className="accent-pink-500 !ml-auto" onChange={() => toggleNode(node.id)} checked={node.selected} />
             </div>
         </li>
