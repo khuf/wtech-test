@@ -5,17 +5,14 @@ export interface Department {
     parentId: string | null; //absent for root nodes
 }
 
-
-interface TreeItemData {
+export class TreeNode<T> {
     id: string;
-}
-
-export class TreeNode<T extends TreeItemData> {
     data: T;
     selected: boolean = false;
     children: TreeNode<T>[];
 
-    constructor(data: T, selected: boolean = false, children: TreeNode<T>[] = []) {
+    constructor(id: string, data: T, selected: boolean = false, children: TreeNode<T>[] = []) {
+        this.id = id;
         this.data = data;
         this.children = children;
         if (children.length === 0) {
@@ -23,49 +20,76 @@ export class TreeNode<T extends TreeItemData> {
         }
     }
 
+    addChild(childNode: TreeNode<T>) {
+        this.children.push(childNode);
+    }
+
     isLeaf() {
         return this.children.length === 0;
     }
 
-    descendantCount() {
+    leafNodeCount() {
         let count = 0;
         if (this.children) {
             this.children.forEach(node => {
-                count += 1;
-                count += node.descendantCount();
+                if (node.isLeaf()) {
+                    count += 1;
+                }
+                count += node.leafNodeCount();
             })
         }
         return count;
     }
 
-    selectedDescendantIds() {
+    selectedLeafNodesCount() {
         let ids: string[] = [];
         if (!this.isLeaf()) {
             this.children.forEach(node => {
                 if (node.isLeaf()) {
                     if (node.selected) {
-                        ids.push(node.data.id);
+                        ids.push(node.id);
                     }
                 }
                 else {
-                    ids = ids.concat(node.selectedDescendantIds());
+                    ids = ids.concat(node.selectedLeafNodesCount());
                 }
             });
         }
         return ids;
     }
+
+      //Same as the two above, but does both counts in one traversal...
+      leafNodeCounts() {
+        let selectedCount = 0;
+        let leafNodeCount = 0;
+        if (!this.isLeaf()) {
+            this.children.forEach(child => {
+                if (child.isLeaf()) {
+                    leafNodeCount += 1;
+                    if (child.selected) {
+                        selectedCount += 1;
+                    }
+                }
+                else {
+                    const [childSelectedCount, childLeafCount] = child.leafNodeCounts();
+                    selectedCount += childSelectedCount;
+                    leafNodeCount += childLeafCount;
+                }
+            })
+        }
+        return [selectedCount, leafNodeCount];
+    }
 }
 
 //Revisit later
-export const createTree = (departments: Department[], selectedDepartmentIds: string[] = []) => {
+export const createDepartmentTree = (departments: Department[], selectedDepartmentIds: string[] = []) => {
     const nodes: Map<string, TreeNode<Department>> = new Map();
     let roots: TreeNode<Department>[] = [];
 
     // create nodes for each department
     departments.forEach(dept => {
-        console.log("Adding node: ", dept.id);
         const selected = selectedDepartmentIds.find(id => dept.id == id) !== undefined;
-        nodes.set(dept.id, new TreeNode(dept, selected));
+        nodes.set(dept.id, new TreeNode(dept.id, dept, selected));
     });
 
     // build the tree
@@ -78,9 +102,9 @@ export const createTree = (departments: Department[], selectedDepartmentIds: str
             }
         } else {
             const parentNode = nodes.get(dept.parentId);
-            console.log(`Found parent ${dept.parentId}, pushing ${node} to ${parentNode}`);
+            console.debug(`Found parent ${dept.parentId}, pushing ${node} to ${parentNode}`);
             if (parentNode && node) {
-                parentNode.children.push(node);
+                parentNode.addChild(node);
             }
         }
     });

@@ -13,11 +13,16 @@ const DepartmentMapper = {
 function DepartmentPage() {
 
     const departments = data.map(d => DepartmentMapper.toDepartment(d));
+
+    const handleSelect = (departments: string[]) => {
+        console.log("Selected departments: ", departments);
+    }
     return (
         <div>
             <h1 className="text-3xl">Departments</h1>
+            <p className="text-1xl">Selected departments are printed to the console whenever a node is toggled</p>
             <div className="w-fit">
-                <DepartmentSelector departments={departments} />
+                <DepartmentSelector departments={departments} onSelect={handleSelect}/>
             </div>
         </div>
     )
