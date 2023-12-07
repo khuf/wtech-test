@@ -9,7 +9,7 @@ export class TreeNode<T> {
     id: number;
     data: T;
     selected: boolean = false;
-    children: TreeNode<T>[];
+    private children: TreeNode<T>[];
 
     constructor(id: number, data: T, selected: boolean = false, children: TreeNode<T>[] = []) {
         this.id = id;
@@ -22,6 +22,10 @@ export class TreeNode<T> {
 
     addChild(childNode: TreeNode<T>) {
         this.children.push(childNode);
+    }
+
+    getChildren(): TreeNode<T>[] {
+        return [...this.children];
     }
 
     isLeaf() {

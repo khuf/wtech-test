@@ -32,9 +32,9 @@ const BranchNode = ({ node, toggleNode }: TreeNodeProps) => {
                 </button>
                 <span className="border-red-800 border-l-4 pl-1.5">{`${node.data.title} (${selectedLeafNodeCount}/${leafNodeCount})`}</span>
             </div>
-            {node.children.length > 0 && (
+            {!node.isLeaf() && (
                 <ul className={`ml-12 ${collapsed && 'hidden'}`}>
-                    {node.children.map(childNode => (
+                    {node.getChildren().map(childNode => (
                         <TreeItem key={childNode.id} node={childNode} toggleNode={toggleNode} />
                     ))}
                 </ul>
