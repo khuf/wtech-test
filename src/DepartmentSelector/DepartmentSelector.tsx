@@ -4,13 +4,13 @@ import TreeItem from "./TreeItem.tsx";
 
 interface Props {
     departments: Department[];
-    selectedDepartmentIds?: string[];
-    onSelect: (departmentIds: string[]) => void;
+    selectedDepartmentIds?: number[];
+    onSelect: (departmentIds: number[]) => void;
 }
 
 export default function DepartmentSelector(props: Props) {
     const [tree, setTree] = useState<TreeNode<Department>[]>(createDepartmentTree(props.departments, props.selectedDepartmentIds));
-    const [selectedDepartmentIds, setSelectedDepartmentIds] = useState<string[]>(props.selectedDepartmentIds ? props.selectedDepartmentIds : []);
+    const [selectedDepartmentIds, setSelectedDepartmentIds] = useState<number[]>(props.selectedDepartmentIds ? props.selectedDepartmentIds : []);
 
     useEffect(() => {
         const tree = createDepartmentTree(props.departments);
@@ -23,8 +23,8 @@ export default function DepartmentSelector(props: Props) {
         setTree(tree);
     }, [selectedDepartmentIds])
 
-    const toggleSelection = (nodeId) => {
-        let newIds: string[] = [];
+    const toggleSelection = (nodeId: number) => {
+        let newIds: number[] = [];
         if (selectedDepartmentIds.includes(nodeId)) {
             newIds = selectedDepartmentIds.filter(d => d !== nodeId);
         }

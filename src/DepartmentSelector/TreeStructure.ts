@@ -1,17 +1,17 @@
 export interface Department {
-    id: string;
+    id: number;
     title: string;
     color: string;
-    parentId: string | null; //absent for root nodes
+    parentId: number | null; //absent for root nodes
 }
 
 export class TreeNode<T> {
-    id: string;
+    id: number;
     data: T;
     selected: boolean = false;
     children: TreeNode<T>[];
 
-    constructor(id: string, data: T, selected: boolean = false, children: TreeNode<T>[] = []) {
+    constructor(id: number, data: T, selected: boolean = false, children: TreeNode<T>[] = []) {
         this.id = id;
         this.data = data;
         this.children = children;
@@ -42,7 +42,7 @@ export class TreeNode<T> {
     }
 
     selectedLeafNodesCount() {
-        let ids: string[] = [];
+        let ids: number[] = [];
         if (!this.isLeaf()) {
             this.children.forEach(node => {
                 if (node.isLeaf()) {
@@ -82,8 +82,8 @@ export class TreeNode<T> {
 }
 
 //Revisit later
-export const createDepartmentTree = (departments: Department[], selectedDepartmentIds: string[] = []) => {
-    const nodes: Map<string, TreeNode<Department>> = new Map();
+export const createDepartmentTree = (departments: Department[], selectedDepartmentIds: number[] = []) => {
+    const nodes: Map<number, TreeNode<Department>> = new Map();
     let roots: TreeNode<Department>[] = [];
 
     // create nodes for each department

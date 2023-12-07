@@ -3,7 +3,7 @@ import { Department, TreeNode } from "./TreeStructure";
 
 interface TreeNodeProps {
     node: TreeNode<Department>;
-    toggleNode: (id: string) => void;
+    toggleNode: (id: number) => void;
 }
 
 /**
