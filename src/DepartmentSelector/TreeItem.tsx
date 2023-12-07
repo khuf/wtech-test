@@ -44,11 +44,12 @@ const BranchNode = ({ node, toggleNode }: TreeNodeProps) => {
 };
 
 const LeafNode = ({ node, toggleNode }: TreeNodeProps) => {
+    const departmentColor = node.data.color;
 
     return (
         <li className="py-1.5">
             <div className="flex space-x-2 px-3">
-                <span className="border-red-800 border-l-4 pl-1.5 pr-4">{`${node.data.title}`}</span>
+                <span style={{borderColor: departmentColor}} className="border-l-4 pl-1.5 pr-4">{`${node.data.title}`}</span>
                 <input type="checkbox" className="accent-pink-500 !ml-auto" onChange={() => toggleNode(node.id)} checked={node.selected} />
             </div>
         </li>
